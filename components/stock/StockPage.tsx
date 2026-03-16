@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useItems } from '@/hooks/useItems'
 import { useCategories } from '@/hooks/useCategories'
 import { useSessions } from '@/hooks/useSessions'
-import { useTelegram } from '@/context/TelegramContext'
+// Telegram sent via server API route
 import { useUser } from '@/context/UserContext'
 import { useLang } from '@/context/LangContext'
 import { useToast } from '@/hooks/useToast'
@@ -20,7 +20,6 @@ export default function StockPage() {
   const { items, updateStock } = useItems()
   const { categories, getCatName, getCatEmoji } = useCategories()
   const { saveSession } = useSessions()
-  const { botToken, chatId } = useTelegram()
   const { user } = useUser()
   const { lang } = useLang()
   const { toasts, showToast } = useToast()
@@ -63,18 +62,15 @@ export default function StockPage() {
     }
     setSaving(true)
     await saveSession('stock', user?.name || 'ไม่ระบุ', user?.role || '', summaryMsg)
-    if (botToken && chatId) {
-      try {
-        const res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chat_id: chatId, text: summaryMsg }),
-        })
-        showToast(res.ok ? 'บันทึกและส่ง Telegram แล้ว ✓' : 'บันทึกแล้ว (ส่ง Telegram ไม่สำเร็จ)', res.ok ? 'success' : 'info')
-      } catch {
-        showToast('บันทึกแล้ว', 'success')
-      }
-    } else {
+    try {
+      const res = await fetch('/api/send-telegram', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: summaryMsg }),
+      })
+      const data = await res.json()
+      showToast(data.ok ? 'บันทึกและส่ง Telegram แล้ว ✓' : 'บันทึกข้อมูลแล้ว ✓', 'success')
+    } catch {
       showToast('บันทึกข้อมูลแล้ว ✓', 'success')
     }
     setSaving(false)
