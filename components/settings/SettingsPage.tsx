@@ -1,40 +1,24 @@
 'use client'
 import { useState } from 'react'
-import { useTelegram } from '@/context/TelegramContext'
 import { useSuppliers } from '@/hooks/useSuppliers'
 import { useCategories } from '@/hooks/useCategories'
 import { useLang } from '@/context/LangContext'
 import { useToast } from '@/hooks/useToast'
 import { T } from '@/lib/translations'
-import { sendTelegram } from '@/lib/telegram'
 import AppHeader from '@/components/AppHeader'
 import BottomNav from '@/components/BottomNav'
 import ToastList from '@/components/Toast'
 
 export default function SettingsPage() {
-  const { botToken, chatId, save: saveTelegram } = useTelegram()
   const { suppliers, addSupplier, deleteSupplier } = useSuppliers()
   const { categories, addCategory, deleteCategory } = useCategories()
   const { lang, setLang } = useLang()
   const { toasts, showToast } = useToast()
   const t = T[lang]
 
-  const [tBot, setTBot] = useState(botToken)
-  const [tChat, setTChat] = useState(chatId)
   const [newSupplier, setNewSupplier] = useState('')
   const [newCatName, setNewCatName] = useState('')
   const [newCatEmoji, setNewCatEmoji] = useState('')
-
-  async function handleSaveTelegram() {
-    await saveTelegram(tBot, tChat)
-    showToast('บันทึก Telegram แล้ว ✓', 'success')
-  }
-
-  async function handleTestTelegram() {
-    if (!tBot || !tChat) { showToast('กรุณากรอก Bot Token และ Chat ID', 'error'); return }
-    const ok = await sendTelegram('✅ ทดสอบส่งจาก เกลอ ข้าวขาหมู', tBot, tChat)
-    showToast(ok ? 'ส่งสำเร็จ ✓' : 'ส่งไม่สำเร็จ', ok ? 'success' : 'error')
-  }
 
   async function handleAddSupplier() {
     if (!newSupplier.trim()) return
@@ -64,25 +48,6 @@ export default function SettingsPage() {
       <ToastList toasts={toasts} />
       <div className="page-content">
         <div className="page-title">{t.settings.title}</div>
-
-        {/* Telegram */}
-        <div className="settings-section">
-          <div className="settings-section-title">{t.settings.tgSection}</div>
-          <div className="settings-card">
-            <div className="form-group">
-              <label className="form-label">{t.settings.botToken}</label>
-              <input className="form-input" type="text" value={tBot} onChange={e => setTBot(e.target.value)} placeholder="1234567890:ABCdef..." />
-            </div>
-            <div className="form-group">
-              <label className="form-label">{t.settings.chatId}</label>
-              <input className="form-input" type="text" value={tChat} onChange={e => setTChat(e.target.value)} placeholder="-100123456789" />
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-              <button className="btn-secondary" onClick={handleTestTelegram}>{t.settings.testBtn}</button>
-              <button className="btn-primary" onClick={handleSaveTelegram}>{t.settings.saveBtn}</button>
-            </div>
-          </div>
-        </div>
 
         {/* Suppliers */}
         <div className="settings-section">
