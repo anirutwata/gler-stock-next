@@ -1,0 +1,488 @@
+import QRCode from 'qrcode'
+import fs from 'fs'
+import path from 'path'
+
+const APP_URL = 'https://gler-stock-next.vercel.app'
+
+const qrDataUrl = await QRCode.toDataURL(APP_URL, {
+  width: 300,
+  margin: 2,
+  color: { dark: '#992F18', light: '#EADAC9' },
+})
+
+const html = `<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>คู่มือพนักงาน — เกลอ ข้าวขาหมู</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* ---- Cover Page ---- */
+  .cover {
+    min-height: 100vh;
+    background: #EADAC9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 32px;
+    text-align: center;
+    page-break-after: always;
+  }
+  .cover-logo {
+    font-size: 48px;
+    margin-bottom: 8px;
+  }
+  .cover-brand {
+    font-size: 28px;
+    font-weight: 700;
+    color: #992F18;
+    margin-bottom: 4px;
+  }
+  .cover-sub {
+    font-size: 15px;
+    color: #5a3a2a;
+    margin-bottom: 40px;
+  }
+  .cover-qr-box {
+    background: #fff;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 4px 24px rgba(153,47,24,0.15);
+    margin-bottom: 20px;
+  }
+  .cover-qr-box img { width: 220px; height: 220px; display: block; }
+  .cover-url {
+    font-size: 14px;
+    font-weight: 600;
+    color: #992F18;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .cover-hint {
+    font-size: 12px;
+    color: #7a5a4a;
+  }
+  .cover-roles {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cover-role {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 24px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(153,47,24,0.1);
+    min-width: 120px;
+  }
+  .cover-role-icon { font-size: 28px; margin-bottom: 6px; }
+  .cover-role-name { font-size: 13px; font-weight: 600; color: #992F18; }
+  .cover-role-desc { font-size: 11px; color: #7a5a4a; margin-top: 2px; }
+
+  /* ---- Content Pages ---- */
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 40px 32px;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: avoid; }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 3px solid #992F18;
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+  }
+  .page-header-icon { font-size: 28px; }
+  .page-header-title { font-size: 20px; font-weight: 700; color: #992F18; }
+  .page-header-role {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    background: #992F18;
+    padding: 3px 10px;
+    border-radius: 99px;
+  }
+
+  .section { margin-bottom: 24px; }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #992F18;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Steps */
+  .steps { list-style: none; }
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+    background: #faf6f2;
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+  .step-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #992F18;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-text { font-size: 13px; line-height: 1.6; }
+  .step-text strong { color: #992F18; }
+
+  /* Status dots */
+  .status-list { display: flex; flex-direction: column; gap: 8px; }
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-green  { background: #2e7d32; }
+  .dot-yellow { background: #f57f17; }
+  .dot-red    { background: #c62828; }
+  .dot-grey   { background: #9e9e9e; }
+
+  /* Tips box */
+  .tip-box {
+    background: #fff8e1;
+    border-left: 4px solid #f9a825;
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #5a4000;
+  }
+
+  /* Info box */
+  .info-box {
+    background: #e8f5e9;
+    border-left: 4px solid #2e7d32;
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #1a3a1a;
+  }
+
+  /* QR mini */
+  .qr-mini-wrap {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #faf6f2;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+  .qr-mini-wrap img { width: 90px; height: 90px; flex-shrink: 0; }
+  .qr-mini-text { font-size: 13px; }
+  .qr-mini-text strong { font-size: 15px; color: #992F18; display: block; margin-bottom: 4px; }
+
+  /* FAQ */
+  .faq-item { margin-bottom: 14px; }
+  .faq-q { font-weight: 700; color: #992F18; margin-bottom: 4px; font-size: 13px; }
+  .faq-a { font-size: 12px; color: #444; padding-left: 12px; border-left: 2px solid #EADAC9; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: #9e9e9e;
+    padding: 16px;
+    border-top: 1px solid #eee;
+    margin-top: 8px;
+  }
+
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .cover { min-height: 100vh; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========= COVER PAGE ========= -->
+<div class="cover">
+  <div class="cover-logo">🍖</div>
+  <div class="cover-brand">เกลอ ข้าวขาหมู</div>
+  <div class="cover-sub">คู่มือการใช้งานระบบจัดการสต็อก</div>
+
+  <div class="cover-qr-box">
+    <img src="${qrDataUrl}" alt="QR Code">
+  </div>
+  <div class="cover-url">${APP_URL}</div>
+  <div class="cover-hint">สแกน QR หรือพิมพ์ URL เพื่อเข้าใช้งาน</div>
+
+  <div class="cover-roles">
+    <div class="cover-role">
+      <div class="cover-role-icon">🍳</div>
+      <div class="cover-role-name">ครัว</div>
+      <div class="cover-role-desc">นับสต็อก</div>
+    </div>
+    <div class="cover-role">
+      <div class="cover-role-icon">🛎️</div>
+      <div class="cover-role-name">Service</div>
+      <div class="cover-role-desc">สั่งซื้อสินค้า</div>
+    </div>
+    <div class="cover-role">
+      <div class="cover-role-icon">👑</div>
+      <div class="cover-role-name">Super Admin</div>
+      <div class="cover-role-desc">ดูภาพรวม</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ========= PAGE 1: การเข้าสู่ระบบ ========= -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-icon">🔑</div>
+    <div class="page-header-title">การเข้าสู่ระบบ</div>
+    <div class="page-header-role">ทุกตำแหน่ง</div>
+  </div>
+
+  <div class="qr-mini-wrap">
+    <img src="${qrDataUrl}" alt="QR">
+    <div class="qr-mini-text">
+      <strong>สแกน QR หรือเปิด URL นี้</strong>
+      ${APP_URL}<br>
+      รองรับ iOS, Android และคอมพิวเตอร์
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📋 ขั้นตอนการเข้าสู่ระบบ</div>
+    <ul class="steps">
+      <li class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">เปิด browser แล้วสแกน QR code หรือพิมพ์ <strong>${APP_URL}</strong></div>
+      </li>
+      <li class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">ใส่ <strong>ชื่อ</strong> ของคุณในช่องที่กำหนด</div>
+      </li>
+      <li class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">เลือก <strong>ตำแหน่ง</strong> ของคุณ: ครัว / Service / Super Admin</div>
+      </li>
+      <li class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">กดปุ่ม <strong>เข้าใช้งาน</strong> เพื่อเริ่มใช้งาน</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="tip-box">
+    💡 <strong>เคล็ดลับ:</strong> บันทึก URL ไว้ใน Bookmark หรือ เพิ่มไปที่หน้าจอหลักของโทรศัพท์ เพื่อเข้าใช้งานได้เร็วขึ้น
+  </div>
+</div>
+
+
+<!-- ========= PAGE 2: ฝ่ายครัว ========= -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-icon">🍳</div>
+    <div class="page-header-title">การนับสต็อกวัตถุดิบ</div>
+    <div class="page-header-role">ฝ่ายครัว</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📋 ขั้นตอนการนับสต็อก</div>
+    <ul class="steps">
+      <li class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">เข้าสู่ระบบ → เลือกตำแหน่ง <strong>ครัว</strong></div>
+      </li>
+      <li class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">กดเมนู <strong>สต็อก</strong> ที่แถบด้านล่าง</div>
+      </li>
+      <li class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">กดชื่อ <strong>หมวดหมู่</strong> เพื่อเปิดรายการ (เช่น เนื้อสัตว์, ผัก)</div>
+      </li>
+      <li class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">ใส่ <strong>จำนวนที่นับได้จริง</strong> ในช่องตัวเลขของแต่ละรายการ</div>
+      </li>
+      <li class="step">
+        <div class="step-num">5</div>
+        <div class="step-text">กด <strong>บันทึกสต็อก</strong> ที่ด้านล่างหน้าจอ</div>
+      </li>
+      <li class="step">
+        <div class="step-num">6</div>
+        <div class="step-text">ตรวจสอบรายการสรุป แล้วกด <strong>ยืนยัน</strong></div>
+      </li>
+      <li class="step">
+        <div class="step-num">7</div>
+        <div class="step-text">ระบบจะส่งรายงานไปยัง <strong>Telegram</strong> โดยอัตโนมัติ ✅</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🔴 ความหมายของสีสถานะ</div>
+    <div class="status-list">
+      <div class="status-item"><div class="dot dot-green"></div> <span><strong>เขียว</strong> — ปกติ มีสต็อกเพียงพอ</span></div>
+      <div class="status-item"><div class="dot dot-yellow"></div> <span><strong>เหลือง</strong> — ใกล้หมด ควรเติมเร็ว ๆ นี้</span></div>
+      <div class="status-item"><div class="dot dot-red"></div> <span><strong>แดง</strong> — หมดหรือน้อยมาก ต้องสั่งซื้อด่วน</span></div>
+      <div class="status-item"><div class="dot dot-grey"></div> <span><strong>เทา</strong> — ยังไม่ได้นับ</span></div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    ✅ ควรนับสต็อกทุกเช้าก่อนเริ่มงาน เพื่อให้ข้อมูลตรงกับความเป็นจริง
+  </div>
+</div>
+
+
+<!-- ========= PAGE 3: ฝ่าย Service ========= -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-icon">🛎️</div>
+    <div class="page-header-title">การสั่งซื้อสินค้า</div>
+    <div class="page-header-role">ฝ่าย Service</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📋 ขั้นตอนการสั่งซื้อ</div>
+    <ul class="steps">
+      <li class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">เข้าสู่ระบบ → เลือกตำแหน่ง <strong>Service</strong></div>
+      </li>
+      <li class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">กดเมนู <strong>สั่งซื้อ</strong> ที่แถบด้านล่าง</div>
+      </li>
+      <li class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">กดชื่อ <strong>ผู้จำหน่าย</strong> เพื่อดูรายการสินค้า</div>
+      </li>
+      <li class="step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>ติ๊กถูก ☑️</strong> รายการที่ต้องการสั่งซื้อ</div>
+      </li>
+      <li class="step">
+        <div class="step-num">5</div>
+        <div class="step-text">ใส่ <strong>จำนวนที่ต้องการ</strong> ในช่องตัวเลข</div>
+      </li>
+      <li class="step">
+        <div class="step-num">6</div>
+        <div class="step-text">กด <strong>สั่งซื้อสินค้า</strong> ที่ด้านล่างหน้าจอ</div>
+      </li>
+      <li class="step">
+        <div class="step-num">7</div>
+        <div class="step-text">ตรวจสอบรายการ ใส่ <strong>หมายเหตุ</strong> (ถ้ามี) แล้วกด <strong>ส่งใบสั่งซื้อ</strong></div>
+      </li>
+      <li class="step">
+        <div class="step-num">8</div>
+        <div class="step-text">ระบบจะส่งใบสั่งซื้อไปยัง <strong>Telegram</strong> โดยอัตโนมัติ ✅</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">💡 เคล็ดลับ</div>
+    <div class="tip-box" style="margin-top:0">
+      🔍 กดช่องค้นหาด้านบน แล้วพิมพ์ชื่อสินค้าเพื่อหาได้เร็วขึ้น<br><br>
+      ⚠️ รายการที่มีสัญลักษณ์ <strong>⚠️</strong> คือของที่ใกล้หมด ควรสั่งซื้อก่อน
+    </div>
+  </div>
+
+  <div class="info-box">
+    ✅ ตรวจสอบรายการให้ครบก่อนกดส่ง เพราะระบบจะส่ง Telegram ทันที
+  </div>
+</div>
+
+
+<!-- ========= PAGE 4: FAQ ========= -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-icon">❓</div>
+    <div class="page-header-title">คำถามที่พบบ่อย</div>
+    <div class="page-header-role">ทุกตำแหน่ง</div>
+  </div>
+
+  <div class="section">
+    <div class="faq-item">
+      <div class="faq-q">Q: ต้องล็อกอินใหม่ทุกครั้งมั้ย?</div>
+      <div class="faq-a">ไม่ต้อง ถ้าไม่ได้ปิด browser ระบบจะจำชื่อและตำแหน่งไว้ให้</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q: ใช้กับโทรศัพท์ได้มั้ย?</div>
+      <div class="faq-a">ได้เลย รองรับทั้ง iPhone (Safari) และ Android (Chrome) ใช้งานได้เหมือนแอปปกติ</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q: ข้อมูลจะหายมั้ยถ้าปิด browser?</div>
+      <div class="faq-a">ไม่หาย ข้อมูลทั้งหมดเก็บใน cloud เปิดใหม่ก็ยังเห็นข้อมูลเดิม</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q: ไม่ได้รับข้อความ Telegram?</div>
+      <div class="faq-a">ตรวจสอบว่าเป็นสมาชิกกลุ่ม Telegram แล้ว ถ้ายังไม่ได้รับแจ้ง Admin ให้ตรวจสอบ</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q: กดบันทึกแล้วขึ้นว่า "บันทึกข้อมูลแล้ว" แต่ไม่มีข้อความ Telegram?</div>
+      <div class="faq-a">ข้อมูลถูกบันทึกแล้ว แต่อาจมีปัญหาการส่ง Telegram ชั่วคราว ติดต่อ Admin</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q: อยากเพิ่มสินค้าใหม่ทำยังไง?</div>
+      <div class="faq-a">ต้องมีสิทธิ์ Super Admin — ไปที่เมนู "จัดการสินค้า" แล้วกดปุ่ม + เพิ่มสินค้า</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q: อยากเปลี่ยนภาษาเป็นภาษาพม่า?</div>
+      <div class="faq-a">กดปุ่ม 🇲🇲 ที่มุมขวาบนของหน้าจอ หรือไปที่ ตั้งค่า → เลือกภาษา</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    เกลอ ข้าวขาหมู · ระบบจัดการสต็อก · ${APP_URL}
+  </div>
+</div>
+
+</body>
+</html>`
+
+const outPath = path.resolve('public/manual.html')
+fs.writeFileSync(outPath, html, 'utf8')
+console.log('✅ Created:', outPath)
+console.log('📄 Open in browser → Print → Save as PDF')
