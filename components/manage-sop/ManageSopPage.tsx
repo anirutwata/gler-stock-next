@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSops } from '@/hooks/useSops'
 import { useSopCategories } from '@/hooks/useSopCategories'
+import { useUser } from '@/context/UserContext'
 import { useLang } from '@/context/LangContext'
 import { useToast } from '@/hooks/useToast'
 import { T } from '@/lib/translations'
@@ -18,6 +19,7 @@ const ROLE_LABELS: Record<string, string> = { kitchen: '🍳 ครัว', serv
 export default function ManageSopPage() {
   const { sops, loading, loadAll, saveSop, deleteSop } = useSops()
   const { categories, addCategory, deleteCategory } = useSopCategories()
+  const { user } = useUser()
   const { lang } = useLang()
   const { toasts, showToast } = useToast()
   const t = T[lang]
@@ -303,7 +305,7 @@ export default function ManageSopPage() {
         <button className="btn-primary" onClick={handleSave} disabled={saving} style={{ marginBottom: editing ? 10 : 0 }}>
           {saving ? 'กำลังบันทึก...' : 'บันทึก'}
         </button>
-        {editing && (
+        {editing && user?.role === 'super_admin' && (
           <button
             onClick={handleDelete}
             style={{ width: '100%', padding: 12, border: '1.5px solid #c62828', borderRadius: 10, background: 'transparent', color: '#c62828', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}
@@ -321,7 +323,7 @@ export default function ManageSopPage() {
               <span style={{ fontSize: 20 }}>{c.emoji}</span>
               <span style={{ flex: 1, fontSize: 14 }}>{c.name_th}</span>
               {c.has_checklist && <span style={{ fontSize: 10, color: 'var(--primary)', fontWeight: 700 }}>CHECKLIST</span>}
-              <button onClick={() => handleDeleteCat(c.id)} style={{ background: 'none', border: 'none', color: '#c62828', cursor: 'pointer', fontSize: 18, padding: '4px 8px' }}>✕</button>
+              {user?.role === 'super_admin' && <button onClick={() => handleDeleteCat(c.id)} style={{ background: 'none', border: 'none', color: '#c62828', cursor: 'pointer', fontSize: 18, padding: '4px 8px' }}>✕</button>}
             </div>
           ))}
         </div>

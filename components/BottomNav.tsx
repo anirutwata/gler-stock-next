@@ -24,13 +24,13 @@ export default function BottomNav() {
   if (!user) return null
 
   const allNavItems = [
-    { href: '/dashboard', label: t.nav.dashboard, icon: navIcons.dashboard, roles: ['super_admin'] },
-    { href: '/stock', label: t.nav.stock, icon: navIcons.stock, roles: ['kitchen', 'super_admin'] },
-    { href: '/order', label: t.nav.order, icon: navIcons.order, roles: ['service', 'super_admin'] },
+    { href: '/dashboard', label: t.nav.dashboard, icon: navIcons.dashboard, roles: ['kitchen', 'service', 'super_admin'] },
+    { href: '/stock', label: t.nav.stock, icon: navIcons.stock, roles: ['kitchen', 'service', 'super_admin'] },
+    { href: '/order', label: t.nav.order, icon: navIcons.order, roles: ['kitchen', 'service', 'super_admin'] },
     { href: '/sop', label: t.nav.sop, icon: navIcons.sop, roles: ['kitchen', 'service', 'super_admin'] },
     { href: '/history', label: t.nav.history, icon: navIcons.history, roles: ['kitchen', 'service', 'super_admin'] },
-    { href: '/manage', label: t.nav.manage, icon: navIcons.manage, roles: ['super_admin'] },
-    { href: '/settings', label: t.nav.settings, icon: navIcons.settings, roles: ['super_admin'] },
+    { href: '/manage', label: t.nav.manage, icon: navIcons.manage, roles: ['kitchen', 'service', 'super_admin'] },
+    { href: '/settings', label: t.nav.settings, icon: navIcons.settings, roles: ['kitchen', 'service', 'super_admin'] },
   ]
 
   const navItems = allNavItems.filter(item => item.roles.includes(user.role))

@@ -9,8 +9,7 @@ export default function Manage() {
   const router = useRouter()
   useEffect(() => {
     if (!user) router.replace('/login')
-    else if (user.role !== 'super_admin') router.replace('/')
   }, [user, router])
-  if (!user || user.role !== 'super_admin') return null
+  if (!user) return null
   return <ManagePage />
 }

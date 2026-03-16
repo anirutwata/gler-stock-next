@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useItems } from '@/hooks/useItems'
 import { useCategories } from '@/hooks/useCategories'
 import { useSuppliers } from '@/hooks/useSuppliers'
+import { useUser } from '@/context/UserContext'
 import { useLang } from '@/context/LangContext'
 import { useToast } from '@/hooks/useToast'
 import { T } from '@/lib/translations'
@@ -17,6 +18,7 @@ export default function ManagePage() {
   const { items, saveItem, deleteItem } = useItems()
   const { categories, getCatName, getCatEmoji } = useCategories()
   const { suppliers, addSupplier } = useSuppliers()
+  const { user } = useUser()
   const { lang } = useLang()
   const { toasts, showToast } = useToast()
   const t = T[lang]
@@ -208,7 +210,7 @@ export default function ManagePage() {
           <input className="form-input" type="number" value={fMinStock} onChange={e => setFMinStock(e.target.value)} placeholder="0" />
         </div>
         <button className="btn-primary" onClick={handleSave} style={{ marginBottom: 8 }}>{t.manage.save}</button>
-        {editing && <button className="btn-danger" style={{ width: '100%' }} onClick={handleDelete}>{t.manage.del}</button>}
+        {editing && user?.role === 'super_admin' && <button className="btn-danger" style={{ width: '100%' }} onClick={handleDelete}>{t.manage.del}</button>}
       </BottomSheet>
 
       <BottomNav />

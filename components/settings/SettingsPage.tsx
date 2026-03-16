@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useSuppliers } from '@/hooks/useSuppliers'
 import { useCategories } from '@/hooks/useCategories'
 import { useLang } from '@/context/LangContext'
+import { useUser } from '@/context/UserContext'
 import { useToast } from '@/hooks/useToast'
 import { T } from '@/lib/translations'
 import AppHeader from '@/components/AppHeader'
@@ -13,6 +14,7 @@ export default function SettingsPage() {
   const { suppliers, addSupplier, deleteSupplier } = useSuppliers()
   const { categories, addCategory, deleteCategory } = useCategories()
   const { lang, setLang } = useLang()
+  const { user } = useUser()
   const { toasts, showToast } = useToast()
   const t = T[lang]
 
@@ -57,7 +59,7 @@ export default function SettingsPage() {
               {suppliers.map(s => (
                 <div key={s.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 0', borderBottom: '1px solid var(--border)' }}>
                   <span style={{ flex: 1, fontSize: 14 }}>🏪 {s.name}</span>
-                  <button onClick={() => deleteSupplier(s.id)} style={{ background: 'none', border: 'none', color: '#c62828', cursor: 'pointer', fontSize: 18, padding: '4px 8px' }}>✕</button>
+                  {user?.role === 'super_admin' && <button onClick={() => deleteSupplier(s.id)} style={{ background: 'none', border: 'none', color: '#c62828', cursor: 'pointer', fontSize: 18, padding: '4px 8px' }}>✕</button>}
                 </div>
               ))}
             </div>
@@ -77,7 +79,7 @@ export default function SettingsPage() {
                 <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 0', borderBottom: '1px solid var(--border)' }}>
                   <span style={{ fontSize: 18 }}>{c.emoji}</span>
                   <span style={{ flex: 1, fontSize: 14 }}>{c.name_th}</span>
-                  <button onClick={() => handleDeleteCategory(c.id)} style={{ background: 'none', border: 'none', color: '#c62828', cursor: 'pointer', fontSize: 18, padding: '4px 8px' }}>✕</button>
+                  {user?.role === 'super_admin' && <button onClick={() => handleDeleteCategory(c.id)} style={{ background: 'none', border: 'none', color: '#c62828', cursor: 'pointer', fontSize: 18, padding: '4px 8px' }}>✕</button>}
                 </div>
               ))}
             </div>

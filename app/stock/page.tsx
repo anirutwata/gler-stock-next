@@ -9,8 +9,7 @@ export default function Stock() {
   const router = useRouter()
   useEffect(() => {
     if (!user) router.replace('/login')
-    else if (user.role === 'service') router.replace('/order')
   }, [user, router])
-  if (!user || user.role === 'service') return null
+  if (!user) return null
   return <StockPage />
 }

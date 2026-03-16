@@ -9,8 +9,7 @@ export default function Order() {
   const router = useRouter()
   useEffect(() => {
     if (!user) router.replace('/login')
-    else if (user.role === 'kitchen') router.replace('/stock')
   }, [user, router])
-  if (!user || user.role === 'kitchen') return null
+  if (!user) return null
   return <OrderPage />
 }

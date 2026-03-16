@@ -9,8 +9,7 @@ export default function ManageSopRoute() {
   const router = useRouter()
   useEffect(() => {
     if (!user) router.replace('/login')
-    else if (user.role !== 'super_admin') router.replace('/sop')
   }, [user, router])
-  if (!user || user.role !== 'super_admin') return null
+  if (!user) return null
   return <ManageSopPage />
 }
