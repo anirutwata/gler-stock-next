@@ -14,7 +14,7 @@ export function LangProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('gler_lang') as Lang
-    if (saved === 'th' || saved === 'mm') setLangState(saved)
+    if (saved === 'th' || saved === 'shn') setLangState(saved)
   }, [])
 
   function setLang(l: Lang) {

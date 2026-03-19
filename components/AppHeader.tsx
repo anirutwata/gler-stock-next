@@ -31,7 +31,7 @@ export default function AppHeader() {
         )}
         <div className="lang-toggle">
           <button className={`lang-btn ${lang === 'th' ? 'active' : ''}`} onClick={() => setLang('th')}>TH</button>
-          <button className={`lang-btn ${lang === 'mm' ? 'active' : ''}`} onClick={() => setLang('mm')}>MM</button>
+          <button className={`lang-btn ${lang === 'shn' ? 'active' : ''}`} onClick={() => setLang('shn')}>SHN</button>
         </div>
       </div>
     </header>

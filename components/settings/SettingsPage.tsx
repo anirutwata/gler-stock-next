@@ -97,7 +97,7 @@ export default function SettingsPage() {
           <div className="settings-card">
             <div style={{ display: 'flex', gap: 8 }}>
               <button onClick={() => setLang('th')} style={{ flex: 1, padding: '12px', borderRadius: 'var(--radius-sm)', border: `2px solid ${lang === 'th' ? 'var(--primary)' : 'var(--border)'}`, background: lang === 'th' ? 'rgba(153,47,24,0.06)' : 'var(--bg-light)', color: lang === 'th' ? 'var(--primary)' : 'var(--dark)', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', fontSize: 14 }}>🇹🇭 ภาษาไทย</button>
-              <button onClick={() => setLang('mm')} style={{ flex: 1, padding: '12px', borderRadius: 'var(--radius-sm)', border: `2px solid ${lang === 'mm' ? 'var(--primary)' : 'var(--border)'}`, background: lang === 'mm' ? 'rgba(153,47,24,0.06)' : 'var(--bg-light)', color: lang === 'mm' ? 'var(--primary)' : 'var(--dark)', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', fontSize: 14 }}>🇲🇲 မြန်မာဘာသာ</button>
+              <button onClick={() => setLang('shn')} style={{ flex: 1, padding: '12px', borderRadius: 'var(--radius-sm)', border: `2px solid ${lang === 'shn' ? 'var(--primary)' : 'var(--border)'}`, background: lang === 'shn' ? 'rgba(153,47,24,0.06)' : 'var(--bg-light)', color: lang === 'shn' ? 'var(--primary)' : 'var(--dark)', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', fontSize: 14 }}>🏔️ ၽႃသႃတႆး</button>
             </div>
           </div>
         </div>

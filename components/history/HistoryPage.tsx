@@ -33,8 +33,8 @@ export default function HistoryPage() {
     <div className="app-shell">
       <AppHeader />
       <div className="page-content">
-        <div className="page-title">{lang === 'mm' ? 'မှတ်တမ်း' : 'ประวัติการทำงาน'}</div>
-        <div className="page-sub">{lang === 'mm' ? 'စတော့စစ်နှင့်မှာယူမှတ်တမ်း' : 'บันทึกการเช็คสต็อกและสั่งซื้อ'}</div>
+        <div className="page-title">{lang === 'shn' ? 'ဝၢင်ႈၵၢၼ်' : 'ประวัติการทำงาน'}</div>
+        <div className="page-sub">{lang === 'shn' ? 'ဝၢင်ႈၵၢၼ်ၸႅတ်ႈၶပ်ႉမၢႆလႄႈသင်ႈသိုဝ်ႈ' : 'บันทึกการเช็คสต็อกและสั่งซื้อ'}</div>
 
         <div className="filter-tabs">
           {(['all', 'stock', 'order'] as const).map(f => (

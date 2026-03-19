@@ -116,8 +116,8 @@ export default function OrderPage() {
                   {supItems.map(item => {
                     const isChecked = checked[item.id]?.checked || false
                     const qty = checked[item.id]?.qty || ''
-                    const name = lang === 'mm' ? item.name_mm : item.name_th
-                    const unit = lang === 'mm' ? item.unit_mm : item.unit_th
+                    const name = lang === 'shn' ? item.name_mm : item.name_th
+                    const unit = lang === 'shn' ? item.unit_mm : item.unit_th
                     const status = getStatus(item)
                     const isLow = status === 'low' || status === 'empty'
                     const emoji = getCatEmoji(item.category)
@@ -130,7 +130,7 @@ export default function OrderPage() {
                         }
                         <div style={{ flex: 1, fontSize: 13, fontWeight: 500 }}>
                           {name}{isLow && <span style={{ color: '#e65100', marginLeft: 4 }}>⚠️</span>}
-                          {lang === 'mm' && <div style={{ fontSize: 11, color: 'var(--secondary)' }}>{item.name_th}</div>}
+                          {lang === 'shn' && <div style={{ fontSize: 11, color: 'var(--secondary)' }}>{item.name_th}</div>}
                         </div>
                         <input
                           className="qty-input"

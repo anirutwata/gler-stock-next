@@ -108,8 +108,8 @@ export default function StockPage() {
                   {catItems.map(item => {
                     const status = getStatus(item)
                     const dotClass = statusDotColor(status)
-                    const name = lang === 'mm' ? item.name_mm : item.name_th
-                    const unit = lang === 'mm' ? item.unit_mm : item.unit_th
+                    const name = lang === 'shn' ? item.name_mm : item.name_th
+                    const unit = lang === 'shn' ? item.unit_mm : item.unit_th
                     const emoji = getCatEmoji(item.category)
                     return (
                       <div key={item.id} className="stock-item">
@@ -120,7 +120,7 @@ export default function StockPage() {
                         <div className={`item-status ${dotClass}`} />
                         <div className="item-name">
                           <div>{name}</div>
-                          {lang === 'mm' && <div className="item-name-mm">{item.name_th}</div>}
+                          {lang === 'shn' && <div className="item-name-mm">{item.name_th}</div>}
                         </div>
                         <input
                           className="stock-input"

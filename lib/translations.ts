@@ -1,4 +1,4 @@
-export type Lang = 'th' | 'mm'
+export type Lang = 'th' | 'shn'
 
 export const T = {
   th: {
@@ -13,16 +13,16 @@ export const T = {
     common: { loading: 'กำลังส่ง...', success: 'ส่งสำเร็จ! ✓', error: 'เกิดข้อผิดพลาด', saved: 'บันทึกแล้ว', deleted: 'ลบแล้ว', all: 'ทั้งหมด', status_ok: 'ปกติ', status_low: 'ต่ำ', status_empty: 'หมด', edit: 'แก้ไข', add: 'เพิ่ม', close: 'ปิด' },
     sop: { title: 'SOP มาตรฐานการปฏิบัติงาน', sub: 'ขั้นตอนการทำงานมาตรฐาน', step: 'ขั้นตอนที่', note: 'หมายเหตุ', checklistSave: 'บันทึกการตรวจสอบ', checklistSaved: 'บันทึกแล้ว ✓', checklistBadge: 'CHECKLIST', noSops: 'ยังไม่มี SOP ในระบบ', manageSop: 'จัดการ SOP', manageTitle: 'จัดการ SOP', manageSub: 'เพิ่ม/แก้ไข/ลบ SOP', addSop: 'เพิ่ม SOP', sopTitle: 'ชื่อ SOP', sopDesc: 'คำอธิบาย (ไม่บังคับ)', sopCategory: 'หมวดหมู่', addStep: '+ เพิ่มขั้นตอน', stepText: 'รายละเอียดขั้นตอน', stepNote: 'หมายเหตุขั้นตอน (ไม่บังคับ)', lastDone: 'ทำล่าสุดโดย', manageCat: 'จัดการหมวดหมู่', addCat: 'เพิ่มหมวดหมู่', catName: 'ชื่อหมวดหมู่', catEmoji: 'อีโมจิ', catChecklist: 'ใช้เป็น Checklist', uploadImg: 'อัปโหลดรูป', delStep: 'ลบ', delSop: 'ลบ SOP', delConfirm: 'ยืนยันลบ SOP นี้?', catDelConfirm: 'ยืนยันลบหมวดหมู่นี้?' },
   },
-  mm: {
-    appName: 'သူငယ်ချင်း ဝက်ခြေသားထမင်း',
-    appSub: 'ကုန်ပစ္စည်းစီမံခန့်ခွဲမှုစနစ်',
-    nav: { home: 'ပင်မ', stock: 'စတော့', order: 'မှာယူ', manage: 'စီမံ', settings: 'ဆက်တင်', history: 'မှတ်တမ်း', dashboard: 'ခြုံငုံ', sop: 'SOP' },
-    home: { title: 'ခြုံငုံသုံးသပ်မှု', total: 'ပစ္စည်းစုစုပေါင်း', low: 'မှာယူရမည့်ပစ္စည်း', lastCheck: 'နောက်ဆုံးစစ်ဆေးချိန်', noCheck: 'မစစ်ဆေးရသေး', qStock: 'စတော့စစ်ဆေး', qOrder: 'မှာယူ', alertTitle: 'စတော့နည်းနေသည်', noAlert: 'စတော့အားလုံးပုံမှန် ✓' },
-    stock: { title: 'စတော့စစ်ဆေး', sub: 'လက်ရှိစတော့ပမာဏထည့်သွင်းပါ', btn: 'စတော့အစီရင်ခံချက်', confirmTitle: 'စတော့အစီရင်ခံချက်', search: 'ရှာဖွေ...', sendBtn: 'ဒေတာသိမ်းဆည်း' },
-    order: { title: 'ကုန်ကြမ်းမှာယူ', sub: 'မှာယူလိုသောပစ္စည်းရွေးချယ်ပါ', btn: 'မှာလွှာချုပ်', confirmTitle: 'မှာယူလွှာ', search: 'ရှာဖွေ...', sendBtn: 'မှာလွှာပို့', note: 'မှတ်ချက်', notePH: 'မှတ်ချက်ထည့်ပါ...', noItems: 'ပစ္စည်းရွေးချယ်ပါ', qty: 'ပမာဏ' },
-    manage: { title: 'ပစ္စည်းစီမံ', sub: 'ထည့်/ပြင်ဆင်/ဖျက်', addBtn: 'ပစ္စည်းထည့်', editTitle: 'ပစ္စည်းပြင်ဆင်', search: 'ရှာဖွေ...', name_th: 'နာမည် (ထိုင်း)', name_mm: 'နာမည် (မြန်မာ)', category: 'အမျိုးအစား', supplier: 'ကုန်ပေးသူ', unit_th: 'ယူနစ် (ထိုင်း)', unit_mm: 'ယူနစ် (မြန်မာ)', minStock: 'အနည်းဆုံးစတော့', save: 'သိမ်းဆည်း', cancel: 'မလုပ်တော့', del: 'ဖျက်', delConfirm: 'ဤပစ္စည်းကိုဖျက်မလား?' },
-    settings: { title: 'ဆက်တင်', tgSection: 'TELEGRAM', botToken: 'Bot Token', chatId: 'Chat ID (အုပ်စု)', testBtn: 'စမ်းသပ်ပို့', langSection: 'ဘာသာစကား', saveBtn: 'သိမ်းဆည်း' },
-    common: { loading: 'ပို့နေသည်...', success: 'ပို့ပြီး! ✓', error: 'အမှားတစ်ခုဖြစ်သည်', saved: 'သိမ်းပြီး', deleted: 'ဖျက်ပြီး', all: 'အားလုံး', status_ok: 'ပုံမှန်', status_low: 'နည်း', status_empty: 'ကုန်', edit: 'ပြင်ဆင်', add: 'ထည့်', close: 'ပိတ်' },
-    sop: { title: 'SOP လုပ်ငန်းစဉ်စံချိန်', sub: 'စံလုပ်ငန်းဆောင်တာများ', step: 'အဆင့်', note: 'မှတ်ချက်', checklistSave: 'စစ်ဆေးမှုသိမ်းဆည်း', checklistSaved: 'သိမ်းပြီး ✓', checklistBadge: 'CHECKLIST', noSops: 'SOP မရှိသေး', manageSop: 'SOP စီမံ', manageTitle: 'SOP စီမံခန့်ခွဲ', manageSub: 'SOP ထည့်/ပြင်ဆင်/ဖျက်', addSop: 'SOP ထည့်', sopTitle: 'SOP နာမည်', sopDesc: 'ဖော်ပြချက် (မဖြစ်မနေမဟုတ်)', sopCategory: 'အမျိုးအစား', addStep: '+ အဆင့်ထည့်', stepText: 'အဆင့်အသေးစိတ်ဖော်ပြချက်', stepNote: 'အဆင့်မှတ်ချက် (မဖြစ်မနေမဟုတ်)', lastDone: 'နောက်ဆုံးလုပ်ဆောင်သူ', manageCat: 'အမျိုးအစားစီမံ', addCat: 'အမျိုးအစားထည့်', catName: 'အမျိုးအစားနာမည်', catEmoji: 'အီမိုဂျီ', catChecklist: 'Checklist အဖြစ်သုံး', uploadImg: 'ပုံတင်', delStep: 'ဖျက်', delSop: 'SOP ဖျက်', delConfirm: 'ဤ SOP ကိုဖျက်မလား?', catDelConfirm: 'ဤအမျိုးအစားကိုဖျက်မလား?' },
+  shn: {
+    appName: 'မိတ်ၵေႃႉ ၶဝ်ႈၶႃႈမူ',
+    appSub: 'ၶဵင်ႇၵၢၼ်ၶပ်ႉမၢႆၶိူင်ႈၵိၼ်',
+    nav: { home: 'ၼႃႈလူင်', stock: 'ၶပ်ႉမၢႆ', order: 'သင်ႈသိုဝ်ႈ', manage: 'ၸတ်းၵၢၼ်', settings: 'တင်ႈၶၼ်', history: 'ဝၢင်ႈၵၢၼ်', dashboard: 'ၽႃႇႁူမ်ႈ', sop: 'SOP' },
+    home: { title: 'ၽႃႇႁူမ်ႈ', total: 'ၶႅင်ၵၢၼ်တင်ႈမူတင်', low: 'လူဝ်ႇသင်ႈထႅင်ႈ', lastCheck: 'ၸႅတ်ႈၸႂ်ႉလိုၼ်းသုတ်း', noCheck: 'ဢမ်ႇပႆႇၸႅတ်ႈ', qStock: 'ၸႅတ်ႈၶပ်ႉမၢႆ', qOrder: 'သင်ႈသိုဝ်ႈ', alertTitle: 'ၶပ်ႉမၢႆတႅမ်ႇ', noAlert: 'ၶပ်ႉမၢႆတင်ႈမူတင်ပိူင်ၵဝ်ႇ ✓' },
+    stock: { title: 'ၸႅတ်ႈၶပ်ႉမၢႆ', sub: 'ၵဵင်းၼမ်ႉမႅၼ်ႈၶပ်ႉမၢႆမိူဝ်ႈလဵဝ်', btn: 'တိုၼ်းတၢၼ်းၶပ်ႉမၢႆ', confirmTitle: 'တိုၼ်းတၢၼ်းၶပ်ႉမၢႆ', search: 'ၵႂႃႇႁႃ...', sendBtn: 'သိမ်ႇၶေႃႈမုၼ်' },
+    order: { title: 'သင်ႈသိုဝ်ႈၶိူင်ႈၵိၼ်', sub: 'လိူၵ်ႈၶႅင်ၵၢၼ်တီႈလူဝ်ႇသင်ႈ', btn: 'ၶၢဝ်ႇသင်ႈသိုဝ်ႈ', confirmTitle: 'ၶၢဝ်ႇသင်ႈသိုဝ်ႈ', search: 'ၵႂႃႇႁႃ...', sendBtn: 'ၸူင်ၶၢဝ်ႇသင်ႈ', note: 'ၶေႃႈမၢႆ', notePH: 'တင်ႈၶေႃႈမၢႆ...', noItems: 'ယုၵ်ႉလိူၵ်ႈၶႅင်ၵၢၼ်', qty: 'ၼမ်ႉမႅၼ်ႈ' },
+    manage: { title: 'ၸတ်းၵၢၼ်ၶေႃႈမုၼ်', sub: 'တိူဝ်း/မႄးၵႄႈ/ဢဝ်ပႅတ်ႈ', addBtn: 'တိူဝ်းၶႅင်ၵၢၼ်', editTitle: 'မႄးၶႅင်ၵၢၼ်', search: 'ၵႂႃႇႁႃ...', name_th: 'ၸိုဝ်ႈ (ထႆး)', name_mm: 'ၸိုဝ်ႈ (တႆး)', category: 'မူႇပဵင်း', supplier: 'ၽူႈၶၢႆ', unit_th: 'ဢၼ် (ထႆး)', unit_mm: 'ဢၼ် (တႆး)', minStock: 'ၶပ်ႉမၢႆဢေႇသုတ်း', save: 'သိမ်ႇ', cancel: 'ပႅတ်ႈ', del: 'ဢဝ်ပႅတ်ႈ', delConfirm: 'တေဢဝ်ၶႅင်ၵၢၼ်ၼႆႉပႅတ်ႈၶႃႈႁႃ?' },
+    settings: { title: 'တင်ႈၶၼ်', tgSection: 'TELEGRAM', botToken: 'Bot Token', chatId: 'Chat ID (မူႇ)', testBtn: 'ၸႅတ်ႈပၼ်', langSection: 'ၽႃသႃ', saveBtn: 'သိမ်ႇ' },
+    common: { loading: 'ၸူင်ယူႇ...', success: 'ၸူင်ယဝ်ႉ! ✓', error: 'မီးလွင်ႈၽိတ်းပိူင်ႈ', saved: 'သိမ်ႇယဝ်ႉ', deleted: 'ဢဝ်ပႅတ်ႈယဝ်ႉ', all: 'တင်ႈမူတင်', status_ok: 'ပိူင်ၵဝ်ႇ', status_low: 'တႅမ်ႇ', status_empty: 'မူတ်း', edit: 'မႄးၵႄႈ', add: 'တိူဝ်း', close: 'ပိတ်' },
+    sop: { title: 'SOP မၢႆမီႈၵၢၼ်ႁဵတ်းၵၢၼ်', sub: 'ၵၢၼ်ၸၼ်ႉမၢႆမီႈ', step: 'ၵၢၼ်ၸၼ်ႉတီႈ', note: 'ၶေႃႈမၢႆ', checklistSave: 'သိမ်ႇၵၢၼ်ၸႅတ်ႈ', checklistSaved: 'သိမ်ႇယဝ်ႉ ✓', checklistBadge: 'CHECKLIST', noSops: 'ဢမ်ႇပႆႇမီး SOP', manageSop: 'ၸတ်းၵၢၼ် SOP', manageTitle: 'ၸတ်းၵၢၼ် SOP', manageSub: 'တိူဝ်း/မႄး/ပႅတ်ႈ SOP', addSop: 'တိူဝ်း SOP', sopTitle: 'ၸိုဝ်ႈ SOP', sopDesc: 'ၶေႃႈပွင်ႈ (ဢမ်ႇၸႂ်ႈၶႂ်ႈ)', sopCategory: 'မူႇပဵင်း', addStep: '+ တိူဝ်းၵၢၼ်ၸၼ်ႉ', stepText: 'ၶေႃႈပွင်ႈၵၢၼ်ၸၼ်ႉ', stepNote: 'ၶေႃႈမၢႆၵၢၼ်ၸၼ်ႉ (ဢမ်ႇၸႂ်ႈၶႂ်ႈ)', lastDone: 'ႁဵတ်းလိုၼ်းသုတ်း', manageCat: 'ၸတ်းမူႇပဵင်း', addCat: 'တိူဝ်းမူႇပဵင်း', catName: 'ၸိုဝ်ႈမူႇပဵင်း', catEmoji: 'ဢီႇမူဝ်ဢၵျီႇ', catChecklist: 'ၸႂ်ႉပဵၼ် Checklist', uploadImg: 'တင်ႈႁၢင်ႈ', delStep: 'ဢဝ်ပႅတ်ႈ', delSop: 'ဢဝ် SOP ပႅတ်ႈ', delConfirm: 'တေဢဝ် SOP ၼႆႉပႅတ်ႈၶႃႈႁႃ?', catDelConfirm: 'တေဢဝ်မူႇပဵင်းၼႆႉပႅတ်ႈၶႃႈႁႃ?' },
   },
 } as const

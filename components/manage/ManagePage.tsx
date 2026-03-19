@@ -145,7 +145,7 @@ export default function ManagePage() {
               : <div className="item-thumb-empty">{getCatEmoji(item.category)}</div>
             }
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 14, fontWeight: 500 }}>{lang === 'mm' ? item.name_mm : item.name_th}</div>
+              <div style={{ fontSize: 14, fontWeight: 500 }}>{lang === 'shn' ? item.name_mm : item.name_th}</div>
               <div className="manage-meta">{getCatName(item.category)} · {item.supplier}</div>
             </div>
             <svg style={{ width: 16, height: 16, color: 'var(--secondary)', flexShrink: 0 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
